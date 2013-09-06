@@ -66,9 +66,7 @@ class AlbumsController < ApplicationController
   
   
   def update
-    debugger
     @album = Album.find(params[:id])
-    debugger
 
     respond_to do |format|
       if @album.update_attributes(params[:album])
