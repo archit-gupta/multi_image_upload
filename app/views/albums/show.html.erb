@@ -2,11 +2,34 @@
     <b>Album Name:</b>
     <%= @album.name %>
   </p>
-  <p>
-    <%= link_to 'Edit', edit_album_path(@album), :class => "btn btn-small" %>
-    <%= link_to 'Back', albums_path, :class => "btn btn-small" %>
-  </p>
+  <table class="table">
+    <thead>
+      <tr>
+        <th><b>Tag</b></th>
+        <th><b>Photos</b></th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @album.photos.each do |photo| %>
+        <tr>
+          <td>
+            <% photo.tags.each do |tag| %>
+              <%= tag.name %>
+            <% end %>
+          </td>
+          <td>
+            <%= image_tag photo.image.url(:thumb) %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
 
-  <% @album.photos.each do |photo| %>
-    <%= image_tag photo.image.url(:thumb) %>
-  <% end %>
+  <div class="form-actions">
+    <p>
+      <%= link_to 'Edit', edit_album_path(@album), :class => "btn" %>
+      <%= link_to 'Back', albums_path, :class => "btn" %>
+    </p>
+  </div>
+
+  
