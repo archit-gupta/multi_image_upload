@@ -1,5 +1,6 @@
 class Tag < ActiveRecord::Base
   attr_accessible :name
 
-  has_and_belongs_to_many :photos
+  has_many :photo_tags
+  has_many :photos, :through => :photo_tags
 end

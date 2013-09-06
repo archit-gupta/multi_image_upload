@@ -1,11 +1,11 @@
 <div class="photo">
   <%= form.simple_fields_for :photos do |photo| %>
-      <% if @album.new_record? %>
-      <%= photo.file_field :image %>
+      <% if !photo.object.image.present? %>
+        <%= photo.file_field :image %>
         <%= render :partial => 'tag', :locals => { :form => photo, :tag => @album.photos.first.tags.build } %>
       <% else %>
-      <%= image_tag photo.object.image.url(:thumb) %>
-      <%= photo.file_field :image %>
+        <%= image_tag photo.object.image.url(:thumb) %>
+        <%= photo.file_field :image %>
         <%= render :partial => 'tag', :locals => { :form => photo } %>
       <% end %>
       
@@ -16,6 +16,7 @@
       </p>
   <% end %>
   <p><%= form.link_to_add "Add a photo", :photos, :class => "btn btn-photo" %></p>
+</div>
 
   <script>
     $(document).on('nested:fieldAdded:photos', function(event){
@@ -23,5 +24,4 @@
           $(".btn-tag:last").click();
         };      
     })
-</script>
-</div>
+  </script>

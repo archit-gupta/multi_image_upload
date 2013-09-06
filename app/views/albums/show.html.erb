@@ -1,4 +1,4 @@
-  <p>
+  <p style="margin-top:10px;">
     <b>Album Name:</b>
     <%= @album.name %>
   </p>
@@ -13,9 +13,7 @@
       <% @album.photos.each do |photo| %>
         <tr>
           <td>
-            <% photo.tags.each do |tag| %>
-              <%= tag.name %>
-            <% end %>
+            <%= photo.tags.map(&:name).join(", ") %>
           </td>
           <td>
             <%= image_tag photo.image.url(:thumb) %>

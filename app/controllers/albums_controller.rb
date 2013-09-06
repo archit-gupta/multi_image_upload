@@ -67,7 +67,7 @@ class AlbumsController < ApplicationController
   
   def update
     @album = Album.find(params[:id])
-
+    
     respond_to do |format|
       if @album.update_attributes(params[:album])
         format.html { redirect_to @album, notice: 'Album was successfully updated.' }

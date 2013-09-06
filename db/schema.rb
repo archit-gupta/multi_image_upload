@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130905233154) do
+ActiveRecord::Schema.define(:version => 20130906185026) do
 
   create_table "albums", :force => true do |t|
     t.string   "name"
@@ -21,6 +21,16 @@ ActiveRecord::Schema.define(:version => 20130905233154) do
   end
 
   add_index "albums", ["user_id"], :name => "index_albums_on_user_id"
+
+  create_table "photo_tags", :force => true do |t|
+    t.integer  "photo_id"
+    t.integer  "tag_id"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  add_index "photo_tags", ["photo_id"], :name => "index_photo_tags_on_photo_id"
+  add_index "photo_tags", ["tag_id"], :name => "index_photo_tags_on_tag_id"
 
   create_table "photos", :force => true do |t|
     t.integer  "album_id"
@@ -33,11 +43,6 @@ ActiveRecord::Schema.define(:version => 20130905233154) do
   end
 
   add_index "photos", ["album_id"], :name => "index_photos_on_album_id"
-
-  create_table "photos_tags", :force => true do |t|
-    t.integer "photo_id"
-    t.integer "tag_id"
-  end
 
   create_table "tags", :force => true do |t|
     t.string   "name"
