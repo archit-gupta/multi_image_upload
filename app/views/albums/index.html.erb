@@ -1,0 +1,28 @@
+<h1>Listing albums</h1>
+
+<table class="table">
+  <tr>
+    <th width=10%>Name</th>
+    <th width=70%>Photos</th>
+    <th width=5% colspan=3>Actions</th>
+  </tr>
+
+<% @albums.each do |album| %>
+  <tr>
+    <td><b><%= album.name %></b></td>
+    <td>
+      <% album.photos.each do |photo| %>
+        <%= image_tag photo.image.url(:thumb) %>
+      <% end %>
+    </td>
+    <td><%= link_to 'Show', album, :class => "btn btn-small" %></td>
+    <td><%= link_to 'Edit', edit_album_path(album), :class => "btn btn-small" %></td>
+    <td><%= link_to 'Delete', album, method: :delete, :confirm => 'Are you sure?', :class => "btn btn-danger btn-small" %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+<div class="form-actions">
+  <%= link_to 'New album', new_album_path, class: "btn" %>
+</div>

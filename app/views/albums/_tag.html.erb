@@ -1,0 +1,4 @@
+<%= form.fields_for :tags do |tag| %>
+  <%= tag.input :name, :label => "Tags" %>
+<% end %>
+<p><%= form.link_to_add "Add a tag", :tags, :class => "btn btn-tag", :style => "display:none" %></p>

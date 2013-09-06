@@ -1,0 +1,31 @@
+<div class="photo">
+  <%= form.simple_fields_for :photos do |photo| %>
+      <% if @album.new_record? %>
+      <%= photo.file_field :image %>
+        <%= render :partial => 'tag', :locals => { :form => photo, :tag => @album.photos.first.tags.build } %>
+      <% else %>
+      <%= image_tag photo.object.image.url(:thumb) %>
+      <%= photo.file_field :image %>
+        <%= render :partial => 'tag', :locals => { :form => photo } %>
+      <% end %>
+      
+      <p>
+        <%= photo.link_to_remove(:class => "btn btn-danger btn-small", :style => "margin-top:-10px") do %>
+          <i class="icon-trash"></i>
+        <% end %>
+      </p>
+  <% end %>
+  <p><%= form.link_to_add "Add a photo", :photos, :class => "btn btn-photo" %></p>
+
+  <script>
+    $(document).on('nested:fieldAdded', function(event){
+      $.each($(".btn-tag"), function(index,val) {
+         if ($(val).parents(".fields").find(".album_photos_tags_name").length == 0) {
+        $(".btn-tag:last").click();
+      };
+      });
+
+      
+    })
+</script>
+</div>
