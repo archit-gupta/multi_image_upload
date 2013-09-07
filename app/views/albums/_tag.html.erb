@@ -1,4 +1,19 @@
-<%= form.fields_for :tags do |tag| %>
-  <%= tag.input :name, :label => "Tags" %>
+
+
+
+<% if !form.object.tags.present? %>
+  <%= form.fields_for :tags do |tag| %>
+    <%= tag.input :name, :label => "Tags" %>
+  <% end %>
+  <p><%= form.link_to_add "Add a tag", :tags, :class => "btn btn-tag", :style => "display:none" %></p>
+<% else %>
+` <% i=0 %>
+  <%= form.fields_for :tags do |tag| %>
+    <% if i == 0 %>
+      <%= tag.input :name, :label => "Tags", input_html: {value: form.object.tags.map(&:name).join(", ")} %>
+    <% end %>
+    <% i+=1 %>
+  <% end %>
 <% end %>
-<p><%= form.link_to_add "Add a tag", :tags, :class => "btn btn-tag", :style => "display:none" %></p>
+
+

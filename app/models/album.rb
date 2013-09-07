@@ -10,27 +10,15 @@ class Album < ActiveRecord::Base
 
   before_save do
     self.photos.each do |photo|
-      photo.tags.first.name.delete(" ").split(",").each_with_index do |tag,index|
-        if index == 0
-          if Tag.find_by_name(tag).present?
-            this_tag = Tag.find_by_name(tag)
-            if photo.photo_tags.present?
-              photo.photo_tags.first.update_attributes(:tag_id => this_tag.id)  
-            else 
-              photo.photo_tags.build(:tag_id => this_tag.id)
-            end
-            photo.tags.first.delete
-          else
-            photo.tags.first.update_attributes(:name => tag)  
-          end
-        else
-          if Tag.find_by_name(tag).present?
+      photo.tags.each {|t| t.destroy}
+      photo.photo_tags.each {|pt| pt.destroy}
+      photo.tags.first.name.delete(" ").split(",").each do |tag|
+          if Tag.find_by_name(tag.downcase).present?
             this_tag = Tag.find_by_name(tag)
             photo.photo_tags.build(:tag_id => this_tag.id)
           else
             photo.tags.build(:name => tag)
           end
-        end
       end
     end
   end
